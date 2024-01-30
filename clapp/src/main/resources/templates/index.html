@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<body>
+    EmployeeCode :<input type="text" id = "employeeCode" class="employeeCode">
+    <br/>
+    From Date: <input type="date" name="fromDate" id="fromDate">
+    <br/>
+    To Date  : <input type="date" name="toDate" id="toDate">
+    <br/>
+    <button class="btnCls" id="btnclick" onclick="registerEmployee()">Register Employee</button>
+    <button class="btnLeaveCls" id="applyLeave" onclick="applyNewLeave()">Apply Leave</button>
+    <button class= "btnUpdateLeave" id="updateLeave" onclick="updateLeaveStatus()">Update Leave</button>
+    <div>
+        EmployeeId : <input type="text" name="empId" id="empId" class="employeeCode">
+        LeaveId    : <input type="text" name="leave id" id="leaveId">
+        NextStatus : <input type="text" name="status" id="nextStatus">
+    </div>
+    <script>
+        function registerEmployee(){
+
+            let employeeCode = '';
+
+            const PREFIX = "EMP";
+            let   randomNumber =Math.floor(Math.random() * 1000);
+            if(randomNumber < 10){
+                employeeCode = PREFIX+"000"+randomNumber;
+            }
+            else if(10 < randomNumber > 100){
+                employeeCode = PREFIX+"00"+randomNumber;
+            }
+            else {
+                employeeCode = PREFIX+"0"+randomNumber;
+            }
+        
+           const employeeList = [{"first_name":"Mimi","dateOfBirth":"27/04/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Danyelle","dateOfBirth":"23/01/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Humfried","dateOfBirth":"14/08/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Phyllys","dateOfBirth":"02/01/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Lavinie","dateOfBirth":"27/05/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Clyde","dateOfBirth":"12/07/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Estelle","dateOfBirth":"14/05/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Dorry","dateOfBirth":"26/03/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Ellswerth","dateOfBirth":"03/05/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Nike","dateOfBirth":"24/06/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Madlen","dateOfBirth":"27/07/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Jessey","dateOfBirth":"11/01/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Chic","dateOfBirth":"10/03/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Fae","dateOfBirth":"11/04/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Chevalier","dateOfBirth":"04/04/1993","reportedTo":"EMP2343"},
+                            {"first_name":"Berty","dateOfBirth":"05/05/1993"},
+                            {"first_name":"Cull","dateOfBirth":"12/08/1993"},
+                            {"first_name":"Milo","dateOfBirth":"19/04/1993"},
+                            {"first_name":"Dannie","dateOfBirth":"09/02/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Mei","dateOfBirth":"25/08/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Cecil","dateOfBirth":"01/05/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Edsel","dateOfBirth":"09/04/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Matthiew","dateOfBirth":"14/03/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Darius","dateOfBirth":"01/03/1993"},
+                            {"first_name":"Grover","dateOfBirth":"15/07/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Alphard","dateOfBirth":"29/04/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Dreddy","dateOfBirth":"23/07/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Annalee","dateOfBirth":"04/04/1993"},
+                            {"first_name":"Roselia","dateOfBirth":"10/06/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Riannon","dateOfBirth":"10/05/1993"},
+                            {"first_name":"Diana","dateOfBirth":"02/08/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Hillel","dateOfBirth":"15/07/1993"},
+                            {"first_name":"Marcus","dateOfBirth":"19/01/1993"},
+                            {"first_name":"Levey","dateOfBirth":"30/03/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Bunnie","dateOfBirth":"02/04/1993"},
+                            {"first_name":"Clarisse","dateOfBirth":"14/04/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Leandra","dateOfBirth":"17/01/1993"},
+                            {"first_name":"Wynn","dateOfBirth":"07/07/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Marcie","dateOfBirth":"27/05/1993"},
+                            {"first_name":"Guntar","dateOfBirth":"14/05/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Alonzo","dateOfBirth":"07/04/1993"},
+                            {"first_name":"Marigold","dateOfBirth":"21/08/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Chickie","dateOfBirth":"08/03/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Cazzie","dateOfBirth":"11/02/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Klara","dateOfBirth":"15/07/1993"},
+                            {"first_name":"Berk","dateOfBirth":"29/07/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Doria","dateOfBirth":"29/04/1993"},
+                            {"first_name":"Lazare","dateOfBirth":"14/02/1993","reportedTo":"EMP0487"},
+                            {"first_name":"Nata","dateOfBirth":"22/03/1993"},
+                            {"first_name":"Ruy","dateOfBirth":"04/08/1993"},
+                            {"first_name":"Adelle","dateOfBirth":"14/05/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Haskel","dateOfBirth":"24/06/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Sabina","dateOfBirth":"06/01/1993"},
+                            {"first_name":"Pattie","dateOfBirth":"17/03/1993"},
+                            {"first_name":"Devin","dateOfBirth":"09/08/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Gage","dateOfBirth":"07/06/1993"},
+                            {"first_name":"Jaye","dateOfBirth":"09/01/1993"},
+                            {"first_name":"Elane","dateOfBirth":"06/04/1993"},
+                            {"first_name":"Fanchon","dateOfBirth":"01/05/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Anna-maria","dateOfBirth":"02/04/1993"},
+                            {"first_name":"Zerk","dateOfBirth":"05/01/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Stormy","dateOfBirth":"04/05/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Belita","dateOfBirth":"21/03/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Andeee","dateOfBirth":"04/03/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Elinor","dateOfBirth":"22/06/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Adolphe","dateOfBirth":"11/03/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Nancee","dateOfBirth":"03/01/1993","reportedTo":"EMP0802"},
+                            {"first_name":"Christie","dateOfBirth":"10/01/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Slade","dateOfBirth":"11/07/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Kele","dateOfBirth":"29/01/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Reed","dateOfBirth":"18/05/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Barr","dateOfBirth":"14/07/1993","reportedTo":"EMP0002"},
+                            {"first_name":"Sybila","dateOfBirth":"30/08/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Renault","dateOfBirth":"10/06/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Joshua","dateOfBirth":"16/07/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Wilfred","dateOfBirth":"21/06/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Muire","dateOfBirth":"10/05/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Eustace","dateOfBirth":"11/01/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Coleman","dateOfBirth":"15/08/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Rafaello","dateOfBirth":"07/02/1993","reportedTo":"EMP0052"},
+                            {"first_name":"Larina","dateOfBirth":"01/02/1993","reportedTo":"EMP0102"},
+                            {"first_name":"Lorianna","dateOfBirth":"08/01/1993","reportedTo":"EMP0102"},
+                            {"first_name":"Cull","dateOfBirth":"09/01/1993","reportedTo":"EMP0102"},
+                            {"first_name":"Todd","dateOfBirth":"14/02/1993","reportedTo":"EMP0102"},
+                            {"first_name":"Elvera","dateOfBirth":"15/08/1993","reportedTo":"EMP0102"},
+                            {"first_name":"Delbert","dateOfBirth":"20/02/1993","reportedTo":"EMP0102"},
+                            {"first_name":"Elyn","dateOfBirth":"22/06/1993","reportedTo":"EMP0102"},
+                            {"first_name":"Gabriel","dateOfBirth":"06/04/1993","reportedTo":"EMP0102"},
+                            {"first_name":"Clayton","dateOfBirth":"23/03/1993","reportedTo":"EMP0102"},
+                            {"first_name":"Bert","dateOfBirth":"08/02/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Mora","dateOfBirth":"05/05/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Claude","dateOfBirth":"10/01/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Chloe","dateOfBirth":"08/08/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Morey","dateOfBirth":"19/06/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Hyacinthie","dateOfBirth":"22/04/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Tally","dateOfBirth":"17/01/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Marcie","dateOfBirth":"02/05/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Rutter","dateOfBirth":"27/07/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Sammie","dateOfBirth":"27/08/1993","reportedTo":"EMP0302"},
+                            {"first_name":"Dagny","dateOfBirth":"26/06/1993","reportedTo":"EMP0302"}];
+	   //fetch('.mockdata.json').then((res)=> {res.json()}).then((data)=>{return data});
+           
+	    // const arraySample  = [{"name":"ram","dateOfBirth":"23/04/2001"}];
+            let randomNum = Math.floor(Math.random()*100);
+	    
+            let employeeName = employeeList[randomNum].first_name;
+            let employeeDateOfBirth = employeeList[randomNum].dateOfBirth;
+            if(employeeList[randomNum].reportedTo != undefined || employeeList[randomNum].reportedTo != "undefined" ){
+                employeeReportedTo = employeeList[randomNum].reportedTo;
+            }
+            const formData = JSON.parse('{}');
+            formData["employeeCode"] = employeeCode;
+            formData["employeeName"] = employeeName;
+            formData["employeeDateOfBirth"] = employeeDateOfBirth;
+            formData["employeeAge"] = "30";
+            formData["clAvailable"] = "12";
+            if(employeeReportedTo != undefined || employeeReportedTo != "undefined"){
+                formData["reportedTo"] = employeeReportedTo;
+            }
+            alert("employeeName: "+employeeName+"<<employeeCode>>>: "+employeeCode+ "reported to :: "+employeeReportedTo);
+             let url = 'http://localhost:8080/registeremployee';
+            const request = fetch(url,{
+                method:'POST',
+                body:JSON.stringify(formData),
+                headers:{
+                    'Content-type':'application/json'
+                }
+            }).then((response)=>{
+                return response.text();
+            }).then((data)=>{
+                alert(data);
+            });
+	}
+        function getEmployeeDetail(){
+            let employeeCode = "EMP0001";
+            let url = `localhost:8080/getemployee/empcode=${employeeCode}`;
+            fetch(url,{
+                method: 'GET',
+            }).then((res)=>{
+                res.json();
+            } ).then((data)=> {
+                console.log(data);
+            });   
+        }
+        function applyNewLeave(){
+            let url = 'http://localhost:8080/applyLeave';
+
+            const employeeCode = document.getElementById('employeeCode').value;
+            const fromDate     = document.getElementById('fromDate').value;
+            const toDate       = document.getElementById('toDate').value;
+            var   from  = new Date(fromDate);
+            var   to    = new Date(toDate)
+            var   noOfDays     = (to.getTime() - from.getTime())/(1000*60*60*24);
+            alert("fromDate: "+fromDate+"to date "+toDate+"employeeCode"+employeeCode+" leave days:"+noOfDays);
+            const formData = new FormData();
+            formData.append('employeeId',document.getElementById('employeeCode').value);
+            formData.append('fromDate',document.getElementById('fromDate').value);
+            formData.append('toDate',document.getElementById('toDate').value);
+            formData.append('leaveDays',noOfDays);
+            const payload = Object.fromEntries(formData);
+            console.log(JSON.stringify(payload));
+            fetch(url,{
+                method:'POST',
+                body : JSON.stringify(payload),
+                headers :{
+                    "content-type":"application/json"
+                }
+            }).then((response)=>{
+                   return response.json();
+            }).then((data)=> {
+                alert(data);
+            });
+        }
+
+        function updateLeaveStatus(){
+            let url = 'http://localhost:8080/updateleave';
+            const employeeId = document.getElementById('empId').value;
+            const leaveId    = document.getElementById('leaveId').value;
+            const nextStatus = document.getElementById('nextStatus').value;
+            const formData = new FormData();
+            formData.append('empId',document.getElementById('empId').value);
+            formData.append('leaveId',document.getElementById('leaveId').value);
+            formData.append('nextStatus',document.getElementById('nextStatus').value);
+            const payload = Object.fromEntries(formData);
+            console.log(JSON.stringify(payload));
+            fetch(url,{
+                method:'PUT',
+                body : JSON.stringify(payload),
+                headers :{
+                    "content-type":"application/json"
+                }
+            }).then((response)=>{
+                   return response.json();
+            }).then((data)=> {
+                alert(data);
+            });
+        }
+    </script>
+</body>
+</html>
