@@ -158,20 +158,25 @@
             }
             alert("employeeName: "+employeeName+"<<employeeCode>>>: "+employeeCode+ "reported to :: "+employeeReportedTo);
              let url = 'http://localhost:8080/registeremployee';
+
+            /*Adelle username = document.getElementById('employeeCode').value;
+             let pasword = "Ghostrider0705";
+             let auth    = window.btoa(`${username}:${pasword}`);*/
             const request = fetch(url,{
                 method:'POST',
                 body:JSON.stringify(formData),
                 headers:{
                     'Content-type':'application/json'
+                   // 'Authorization': `Basic ${auth}`
                 }
-            }).then((response)=>{
+            }).then((response)=>{   
                 return response.text();
             }).then((data)=>{
                 alert(data);
             });
 	}
         function getEmployeeDetail(){
-            let employeeCode = "EMP0001";
+            let employeeCode =  document.getElementById('employeeCode').value;
             let url = `localhost:8080/getemployee/empcode=${employeeCode}`;
             fetch(url,{
                 method: 'GET',

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cl.clapp.clapprepository.Mockdatarepository;
@@ -38,6 +39,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 
 @RestController
+@RequestMapping("/")
 public class ClAppController {
     @Autowired
     private EmployeeService employeeService;
@@ -200,12 +202,6 @@ public class ClAppController {
         }
         return ResponseEntity.status(httpStatus).body(responseString);
      }
-
-     /**
-     * @param httpServletRequest
-     * @return
-     * @throws JsonProcessingException
-     */
     @GetMapping("/getMyLeaves")
      public ResponseEntity<String> getMyLeaves(HttpServletRequest httpServletRequest) throws JsonProcessingException{
         String employeeCode = httpServletRequest.getParameter("empcode");
@@ -268,7 +264,7 @@ public class ClAppController {
      }
 
      @GetMapping(value = "/getMockData")
-     public String getMockData(HttpServletRequest httpServletRequest) throws JsonProcessingException{
+     public String getMockData(HttpServletRequest httpServletRequest ) throws JsonProcessingException{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         String fromString = httpServletRequest.getParameter("from");
         String toString   = httpServletRequest.getParameter("to");

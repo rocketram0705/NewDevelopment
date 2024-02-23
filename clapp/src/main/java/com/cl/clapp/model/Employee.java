@@ -1,13 +1,17 @@
 package com.cl.clapp.model;
 
+import java.util.Collection;
 import java.util.Date;
-//import java.util.List;
+import java.util.List;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 //import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,6 +23,11 @@ import javax.persistence.SqlResultSetMapping;
 //import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.cl.clapp.dto.EmployeeInfo;
 import com.cl.clapp.dto.EmployeeUUID;
@@ -38,13 +47,14 @@ import com.cl.clapp.dto.EmployeeUUID;
 @Entity
 
 //@JsonIgnoreProperties(value = "hibernateLazyInitializer")
-public class Employee {
+public class Employee implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID    empId;
     @Column(unique = true,nullable = false)
     private String  empCode;
     private String  employeeName;
+
     /**
      *
      */
@@ -55,6 +65,8 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "reportedTo",unique = false)
     private Employee reportedTo;
+    @Enumerated(EnumType.STRING)
+    private Role role;
   //  @OneToMany(fetch = FetchType.LAZY,mappedBy = "employee")
   //  private List<Leave> leave;
     
@@ -74,18 +86,25 @@ public class Employee {
     public void setReportedTo(Employee reportedTo) {
         this.reportedTo = reportedTo;
     }
+    public Role getRole(){
+        return role;
+    }
+    public void setRole(Role role){
+        this.role = role ;
+    }
     /**
      * 
      */
     public Employee() {
     }
-    public Employee(UUID empId, String empCode, String employeeName, Date dateOfBirth, int age, int clAvailable) {
+    public Employee(UUID empId, String empCode, String employeeName, Date dateOfBirth, int age, int clAvailable,Role role) {
         this.empId          = empId;
         this.empCode        = empCode;
         this.employeeName   = employeeName;
         this.dateOfBirth    = dateOfBirth;
         this.age            = age;
         this.clAvailable    = clAvailable;
+        this.role = role;
     }
     
    public UUID getEmpId() {
@@ -130,6 +149,40 @@ public class Employee {
     }
     public void setClAvailable(int clAvailable) {
         this.clAvailable = clAvailable;
+    }
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+       String retedrivedRole = this.getRole().name();
+       System.out.println("<<<<>>>"+retedrivedRole);
+       List<SimpleGrantedAuthority> aList = new ArrayList<>();
+       aList.add(new SimpleGrantedAuthority(retedrivedRole));
+       return aList;
+    }
+    @Override
+    public String getPassword() {
+        BCryptPasswordEncoder  bCryptPasswordEncoder  = new BCryptPasswordEncoder();
+        String encryptedPassword = bCryptPasswordEncoder.encode("Ghostrider0705");
+        return encryptedPassword;
+    }
+    @Override
+    public String getUsername() {
+        return empCode;
+    }
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
        
 }
