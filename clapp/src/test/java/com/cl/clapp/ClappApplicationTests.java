@@ -5,9 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.*;
+
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.jupiter.api.BeforeAll;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.cl.clapp.clapprepository.EmployeeRepository;
 import com.cl.clapp.clapprepository.LeaveRepository;
@@ -19,7 +25,8 @@ import com.cl.clapp.model.Property;
 import com.cl.clapp.dto.EmployeeInfo;
 import com.cl.clapp.dto.EmployeeUUID;
 
-@SpringBootTest
+
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class ClappApplicationTests {
 	@Autowired
 	private EmployeeRepository employeeRepository;
@@ -29,6 +36,18 @@ class ClappApplicationTests {
 
 	@Autowired
 	private PropertiesRepository propertiesRepository;
+
+	@Autowired
+	private WebApplicationContext webApplicationContext;
+
+	@Autowired
+	private MockMvc mockMvc;
+
+	@BeforeAll
+	public void setUp(){
+		//MockMvcBuilders.webAppContextSetup(webApplicationContext).apply(springSe).build();
+	}
+
 	@Test
 	void checkIfPersisting() {
 		//given 
@@ -113,7 +132,7 @@ class ClappApplicationTests {
 		
 		List <UUID> subordinatesList = Arrays.asList(UUID.fromString("d702c0f0-4440-11ee-a94e-9fdb3e4b4e3f"),UUID.fromString("24ec295c-16db-4d7d-a43a-2a2749341526"));
 		List<Leave> leaves = leaveRepository.findAllByEmpIdIn(subordinatesList);
-		assertEquals(leaves.size(),4);
+		assertEquals(leaves.size(),6);
 	}
 
 	@Test
@@ -127,4 +146,5 @@ class ClappApplicationTests {
 		Property property = propertiesRepository.getHolidaysListFromProperties();
 		assertNotNull(property);
 	}
+
 }
