@@ -13,7 +13,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Converter(autoApply = true)
 public class JsonConverter implements AttributeConverter<LinkedHashMap<String,String>,Object>  {
     
-    private static final long serialVersionUID = 1L;
+   // private static final long serialVersionUID = 1L;
     private static final ObjectMapper mapper = new ObjectMapper();
     //mapper.configure(JsonParser.Feature.ALLOW_UNQUOTED_FIELD_NAMES,true);
     @Override
